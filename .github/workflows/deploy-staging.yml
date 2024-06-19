@@ -12,7 +12,9 @@ env:
   DOCKER_IMAGE_NAME: yvesfso-azure-ttt
   AZURE_WEBAPP_NAME: yvesfso-ttt-app
   ###############################################
-
+permissions:
+  id-token: write
+  contents: read
 jobs:
   build:
     if: contains(github.event.pull_request.labels.*.name, 'stage')
@@ -73,7 +75,7 @@ jobs:
   Deploy-to-Azure:
     runs-on: ubuntu-latest
     needs: Build-Docker-Image
-    name: Deploy app container to Azure
+    name: Deploy app container to Azure    
     steps:
       - name: "Login via Azure CLI"
         uses: azure/login@v2
